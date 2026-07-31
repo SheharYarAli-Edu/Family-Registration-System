@@ -1,0 +1,8 @@
+{
+  "name": "family-registration-system",
+  "version": "1.0.0",
+  "description": "Family Registration System - Vercel Deployment",
+  "scripts": {
+    "vercel-build": "echo 'Build completed'"
+  }
+}

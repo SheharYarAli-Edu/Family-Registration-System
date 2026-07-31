@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Family Registration System</title>
+    <base href="/">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-users"></i>
+                <span>FamilyReg</span>
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#home" class="nav-link active"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="#registration" class="nav-link"><i class="fas fa-user-plus"></i> Registration</a></li>
+                <li><a href="#myfamily" class="nav-link"><i class="fas fa-tree"></i> My Family</a></li>
+                <li><a href="#contact" class="nav-link"><i class="fas fa-envelope"></i> Contact</a></li>
+                <li><a href="#about" class="nav-link"><i class="fas fa-info-circle"></i> About</a></li>
+            </ul>
+            <div class="nav-auth" id="navAuth">
+                <button class="btn btn-login" id="loginBtn">Login</button>
+                <button class="btn btn-register" id="registerBtn">Register</button>
+            </div>
+            <div class="nav-user" id="navUser" style="display: none;">
+                <span class="user-name" id="userName">User</span>
+                <button class="btn btn-logout" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <section id="home" class="section active">
+            <div class="container">
+                <div class="hero">
+                    <h1>Welcome to Family Registration System</h1>
+                    <p>Manage your family tree, sub-families, and connections all in one place</p>
+                    <div class="hero-stats">
+                        <div class="stat-card">
+                            <i class="fas fa-users"></i>
+                            <h3 id="totalFamilies">0</h3>
+                            <p>Total Families</p>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-user-friends"></i>
+                            <h3 id="totalMembers">0</h3>
+                            <p>Total Members</p>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-user-check"></i>
+                            <h3 id="activeUsers">0</h3>
+                            <p>Active Users</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="dashboard-grid">
+                    <div class="card">
+                        <h3><i class="fas fa-rocket"></i> Quick Actions</h3>
+                        <div class="quick-actions">
+                            <button class="action-btn" onclick="navigateTo('registration')">
+                                <i class="fas fa-user-plus"></i> Register Family
+                            </button>
+                            <button class="action-btn" onclick="navigateTo('myfamily')">
+                                <i class="fas fa-tree"></i> View Family Tree
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3><i class="fas fa-bell"></i> Recent Activity</h3>
+                        <div class="activity-feed">
+                            <p>No recent activity</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="registration" class="section">
+            <div class="container">
+                <h2><i class="fas fa-user-plus"></i> Family Registration</h2>
+                <div class="registration-form-container">
+                    <form id="familyForm" class="form">
+                        <div class="form-group">
+                            <label for="familyName">Family Name *</label>
+                            <input type="text" id="familyName" placeholder="e.g., Smith Family" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="headName">Head of Family *</label>
+                            <input type="text" id="headName" placeholder="Full name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address *</label>
+                            <input type="email" id="email" placeholder="family@email.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" placeholder="+1 234 567 8900">
+                        </div>
+                        <div class="form-group">
+                            <label for="address">Address</label>
+                            <input type="text" id="address" placeholder="123 Main St, City, Country">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password *</label>
+                            <input type="password" id="password" placeholder="Min 6 characters" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Sub-Families (Optional)</label>
+                            <div id="subFamilyContainer">
+                                <div class="sub-family-entry">
+                                    <input type="text" placeholder="Sub-family name" class="sub-name">
+                                    <input type="text" placeholder="Head name" class="sub-head">
+                                    <button type="button" class="btn-remove-sub" onclick="removeSubFamily(this)">×</button>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-secondary" onclick="addSubFamily()">
+                                <i class="fas fa-plus"></i> Add Sub-Family
+                            </button>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Register Family <i class="fas fa-arrow-right"></i></button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <section id="myfamily" class="section">
+            <div class="container">
+                <h2><i class="fas fa-tree"></i> My Family Tree</h2>
+                <div id="familyTree" class="family-tree">
+                    <div class="loading">Loading family data...</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="section">
+            <div class="container">
+                <h2><i class="fas fa-envelope"></i> Contact Us</h2>
+                <div class="contact-grid">
+                    <div class="card">
+                        <h3>Send us a message</h3>
+                        <form id="contactForm">
+                            <div class="form-group">
+                                <input type="text" placeholder="Your Name" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" placeholder="Your Email" required>
+                            </div>
+                            <div class="form-group">
+                                <textarea placeholder="Your Message" rows="4" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Send Message</button>
+                        </form>
+                    </div>
+                    <div class="card contact-info">
+                        <h3>Get in Touch</h3>
+                        <p><i class="fas fa-envelope"></i> sheharyarali542gmail.com</p>
+                        <p><i class="fas fa-phone"></i> +92 309 0747079</p>
+                        <p><i class="fas fa-clock"></i> Mon-Fri 9AM-6PM</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+<section id="about" class="section">
+    <div class="container">
+        <h2><i class="fas fa-info-circle"></i> About Us</h2>
+        
+        <!-- Developer Card -->
+        <div class="about-card">
+            <div class="about-header">
+                <i class="fas fa-code" style="color: var(--primary); font-size: 2rem;"></i>
+                <h3 style="margin-left: 1rem;">Website Developer</h3>
+            </div>
+            <div class="about-content">
+                <div class="profile-section">
+                    <div class="profile-image">
+                        <img src="images/developer.jpg" alt="Developer Photo" style="width: 130px; height: 130px; border-radius: 50%; object-fit: cover; border: 4px solid var(--primary); box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);">
+                    </div>
+                <div class="profile-info">
+                        <h3>SheharYar Ali Channar</h3>
+                        <p><strong><i class="fas fa-briefcase"></i> Role:</strong> Full Stack Developer</p>
+                        <p><strong><i class="fas fa-phone"></i> Contact:</strong> <a href="tel:+923090747079">+92 309 0747079</a></p>
+                        <p><strong><i class="fas fa-envelope"></i> Email:</strong> <a href="mailto:sheharyarali54@gmail.com">sheharyarali54@gmail.com</a></p>
+                        <p><strong><i class="fas fa-globe"></i> Website:</strong> <a href="#">www.familyregistrationsystem.com</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Helper Card -->
+        <div class="about-card" style="margin-top: 2rem;">
+            <div class="about-header">
+                <i class="fas fa-hands-helping" style="color: #7c3aed; font-size: 2rem;"></i>
+                <h3 style="margin-left: 1rem;">Helper / Assistant</h3>
+            </div>
+            <div class="about-content">
+                <div class="profile-section">
+                    <div class="profile-image">
+                        <img src="images/helper.jpg" alt="Helper Photo" style="width: 130px; height: 130px; border-radius: 50%; object-fit: cover; border: 4px solid #7c3aed; box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);">
+                    </div>
+                    <div class="profile-info">
+                        <h3>Hafiz Mudassar Iqbal Channar</h3>
+                        <p><strong><i class="fas fa-briefcase"></i> Role:</strong> Assistant Developer</p>
+                        <p><strong><i class="fas fa-phone"></i> Contact:</strong> <a href="tel:+923071065307">+92 307 1065307</a></p>
+                        <p><strong><i class="fas fa-envelope"></i> Email:</strong> <a href="mailto:mchannar65@gmail.com">mchannar65@gmail.com</a></p>
+                        <p><strong><i class="fas fa-globe"></i> Website:</strong> <a href="#">www.helperwebsite.com</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Project Info -->
+        <div class="about-card" style="margin-top: 2rem;">
+            <div class="about-header">
+                <i class="fas fa-info-circle" style="color: #22c55e; font-size: 2rem;"></i>
+                <h3 style="margin-left: 1rem;">Project Information</h3>
+            </div>
+            <div class="about-content">
+                <p><strong>Project Name:</strong> Family Registration System</p>
+                <p><strong>Version:</strong> 1.0.0</p>
+                <p><strong>Technology Stack:</strong> HTML, CSS, JavaScript, Node.js, Express, MongoDB</p>
+                <p><strong>Developed:</strong> July 2026</p>
+                <p><strong>Purpose:</strong> A complete family management system with registration, sub-family tracking, and secure authentication.</p>
+            </div>
+        </div>
+    </div>
+</section>
+    </main>
+
+    <div id="authModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeModal">&times;</span>
+            <div id="authFormContainer">
+                <form id="loginForm" class="auth-form active">
+                    <h2>Login</h2>
+                    <div class="form-group">
+                        <input type="email" id="loginEmail" placeholder="Email Address" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="loginPassword" placeholder="Password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                    <p>Don't have an account? <a href="#" id="switchToRegister">Register</a></p>
+                </form>
+                <form id="registerForm" class="auth-form">
+                    <h2>Register</h2>
+                    <div class="form-group">
+                        <input type="text" id="regName" placeholder="Full Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="regEmail" placeholder="Email Address" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="regPassword" placeholder="Password (min 6 characters)" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Register</button>
+                    <p>Already have an account? <a href="#" id="switchToLogin">Login</a></p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
